@@ -1,0 +1,34 @@
+find_path(PETSc_INCLUDE_DIR
+  NAMES petsc.h
+  PATH_SUFFIXES include
+)
+
+find_library(PETSc_LIBRARY
+  NAMES petsc
+)
+
+message(STATUS ${PETSc_INCLUDE_DIR})
+message(STATUS ${PETSc_LIBRARY})
+
+set(PETSc_VERSION "3.13")
+
+find_package_handle_standard_args(PETSc
+  FOUND_VAR PETSc_FOUND
+  REQUIRED_VARS
+    PETSc_LIBRARY
+    PETSc_INCLUDE_DIR
+  VERSION_VAR PETSc_VERSION
+)
+
+if(PETSc_FOUND)
+  set(PETSc_LIBRARIES ${PETSc_LIBRARY})
+  set(PETSc_INCLUDE_DIRS ${PETSc_INCLUDE_DIR})
+endif()
+
+if(PETSc_FOUND)
+  add_library(PETSc::PETSc UNKNOWN IMPORTED)
+  set_target_properties(PETSc::PETSc PROPERTIES
+    IMPORTED_LOCATION "${PETSc_LIBRARY}"
+    INTERFACE_INCLUDE_DIRECTORIES "${PETSc_INCLUDE_DIR}"
+  )
+endif()

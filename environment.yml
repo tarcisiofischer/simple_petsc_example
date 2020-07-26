@@ -1,0 +1,16 @@
+name: simple_petsc_example
+
+channels:
+- conda-forge
+- defaults
+
+dependencies:
+- python
+- numpy
+- scipy
+- matplotlib
+- cmake>=3.9.1
+- eigen
+- petsc
+- pybind11
+
